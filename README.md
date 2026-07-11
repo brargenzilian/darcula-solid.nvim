@@ -1,10 +1,9 @@
 ![Darcula-solid.nvim](https://raw.githubusercontent.com/briones-gabriel/darcula-solid.nvim/main/resources/darcula-solid-logo.png)
 # Darcula-solid.nvim
-A color-scheme that was heavily inspired by the JetBrains IntelliJ IDEA default theme, but was carefully refined to bring a more pleasant, aesthetic, and contrasting experience to our beloved Neovim.
+A color-scheme that was heavily inspired by the JetBrains IntelliJ IDEA default theme, but was carefully refined to bring a more pleasant, aesthetic, and contrasting experience.
 
 ## Requirements
-* `termguicolors` enabled for true color support
-* (recommended) [Neovim >= 0.8](https://github.com/neovim/neovim/releases)
+* `termguicolors` enabled for true color support.
 
 ## Instalation examples
 With the native [vim.pack](https://neovim.io/doc/user/pack/):
@@ -29,4 +28,4 @@ colorscheme darcula-solid
 ## Preview
 ![darcula-solid](https://raw.githubusercontent.com/briones-gabriel/darcula-solid.nvim/main/resources/darcula-solid-example.png)
 
-Huge thanks to [@rorystephenson](https://github.com/rorystephenson) for suggesting this amazing idea and the developers of [lush.nvim](https://github.com/rktjmp/lush.nvim) for their work in the plugin that made this one possible. 
+Huge thanks to [@rorystephenson](https://github.com/rorystephenson) for suggesting this amazing idea and the developers of [lush.nvim](https://github.com/rktjmp/lush.nvim) for their work that made this possible. 
