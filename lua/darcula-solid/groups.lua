@@ -1,28 +1,8 @@
 local lush = require('lush')
-local hsl = lush.hsl
-
--- Base colors
-local bg      = hsl('#252526')    -- base background
-local overbg  = hsl('#313234')    -- other backgrounds
-local subtle  = hsl('#353638')    -- out-of-buffer elements
-
-local cursor  = hsl('#f7f7f7')
-local fg      = hsl('#cfd2d5')
-local comment = hsl('#8a8a8a')    -- comments
-local mid     = hsl('#383839')   -- either foreground or background
-local faded   = hsl('#585e65')    -- non-important text elements
-local pop     = hsl('#ffffff')
-
--- TODO: Convert these colors from hsl to hex
-local red     = hsl(1, 77, 59)
-local orange  = hsl(27, 61, 50)
-local yellow  = hsl(37, 100, 71)
-local green   = hsl(83, 27, 53)
-local blue    = hsl(215, 80, 73)
-local magenta = hsl(310,  40, 70)
+local palette = require('lua.darcula-solid.palette')
 
 ---@diagnostic disable: undefined-global
-local theme = lush(function(injected_functions)
+return lush(function(injected_functions)
   local sym = injected_functions.sym
 
   return {
@@ -36,72 +16,72 @@ local theme = lush(function(injected_functions)
     --
     -- See :h highlight-groups
     --
-    ColorColumn    { bg=overbg }, -- Columns set with 'colorcolumn'
-    Conceal        { fg=hsl(0, 0, 25) }, -- Placeholder characters substituted for concealed text (see 'conceallevel')
-    Cursor         { fg=bg,      bg=cursor }, -- Character under the cursor
-    CurSearch      { fg=bg,      bg=yellow }, -- Highlighting a search pattern under the cursor (see 'hlsearch')
+    ColorColumn    { bg=palette.subtle_black }, -- Columns set with 'colorcolumn'
+    -- Conceal        { }, -- Placeholder characters substituted for concealed text (see 'conceallevel')
+    Cursor         { fg=palette.black,      bg=palette.white }, -- Character under the cursor
+    CurSearch      { fg=palette.black,      bg=palette.yellow }, -- Highlighting a search pattern under the cursor (see 'hlsearch')
     -- lCursor        { }, -- Character under the cursor when |language-mapping| is used (see 'guicursor')
     -- CursorIM       { }, -- Like Cursor, but used when in IME mode |CursorIM|
-    CursorColumn   { bg=overbg }, -- Screen-column at the cursor, when 'cursorcolumn' is set.
+    CursorColumn   { bg=palette.subtle_black }, -- Screen-column at the cursor, when 'cursorcolumn' is set.
     CursorLine     { CursorColumn }, -- Screen-line at the cursor, when 'cursorline' is set. Low-priority if foreground (ctermfg OR guifg) is not set.
-    Directory      { fg=hsl('#87949b') }, -- Directory names (and other special names in listings)
-    DiffAdd        { fg=green }, -- Diff mode: Added line |diff.txt|
-    DiffChange     { fg=yellow }, -- Diff mode: Changed line |diff.txt|
-    DiffDelete     { fg=red }, -- Diff mode: Deleted line |diff.txt|
+    Directory      { fg=palette.teal }, -- Directory names (and other special names in listings)
+    DiffAdd        { fg=palette.green }, -- Diff mode: Added line |diff.txt|
+    DiffChange     { fg=palette.yellow }, -- Diff mode: Changed line |diff.txt|
+    DiffDelete     { fg=palette.red }, -- Diff mode: Deleted line |diff.txt|
     DiffText       { DiffChange, gui="underline" }, -- Diff mode: Changed text within a changed line |diff.txt|
     -- EndOfBuffer    { }, -- Filler lines (~) after the end of the buffer. By default, this is highlighted like |hl-NonText|.
-    TermCursor     { fg=bg,      bg=cursor }, -- Cursor in a focused terminal
+    TermCursor     { fg=palette.black,      bg=palette.white }, -- Cursor in a focused terminal
     -- TermCursorNC   { }, -- Cursor in an unfocused terminal
-    ErrorMsg       { fg=red }, -- Error messages on the command line
-    VertSplit      { fg=overbg,  bg=bg }, -- Column separating vertically split windows
-    Folded         { fg=comment, bg=overbg }, -- Line used for closed folds
-    FoldColumn     { fg=faded }, -- 'foldcolumn'
+    ErrorMsg       { fg=palette.red }, -- Error messages on the command line
+    VertSplit      { fg=palette.gray,  bg=palette.black }, -- Column separating vertically split windows
+    Folded         { fg=palette.lightgray, bg=palette.subtle_black }, -- Line used for closed folds
+    FoldColumn     { fg=palette.gray }, -- 'foldcolumn'
     SignColumn     { FoldColumn }, -- Column where |signs| are displayed
     IncSearch      { CurSearch }, -- 'incsearch' highlighting; also used for the text replaced with ":s///c"
     Substitute     { CurSearch }, -- |:substitute| replacement text highlighting
-    LineNr         { fg=faded }, -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
+    LineNr         { fg=palette.gray }, -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
     -- LineNrAbove    { }, -- Line number for when the 'relativenumber' option is set, above the cursor line
     -- LineNrBelow    { }, -- Line number for when the 'relativenumber' option is set, below the cursor line
-    CursorLineNr   { fg=orange }, -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
+    CursorLineNr   { fg=palette.orange }, -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
     -- CursorLineFold { }, -- Like FoldColumn when 'cursorline' is set for the cursor line
     -- CursorLineSign { }, -- Like SignColumn when 'cursorline' is set for the cursor line
-    MatchParen     { fg=pop,     bg=mid }, -- Character under the cursor or just before it, if it is a paired bracket, and its match. |pi_paren.txt|
-    ModeMsg        { fg=faded }, -- 'showmode' message (e.g., "-- INSERT -- ")
-    MsgArea        { fg=fg,      bg=bg }, -- Area for messages and cmdline
-    MsgSeparator   { fg=orange }, -- Separator for scrolled messages, `msgsep` flag of 'display'
-    MoreMsg        { fg=green }, -- |more-prompt|
-    NonText        { fg=fg,      bg=bg }, -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line). See also |hl-EndOfBuffer|.
-    Normal         { fg=fg,      bg=bg }, -- Normal text
+    MatchParen     { fg=palette.white,     bg=palette.subtle_black }, -- Character under the cursor or just before it, if it is a paired bracket, and its match. |pi_paren.txt|
+    ModeMsg        { fg=palette.gray }, -- 'showmode' message (e.g., "-- INSERT -- ")
+    MsgArea        { fg=palette.subtle_white,      bg=palette.black }, -- Area for messages and cmdline
+    MsgSeparator   { fg=palette.orange }, -- Separator for scrolled messages, `msgsep` flag of 'display'
+    MoreMsg        { fg=palette.green }, -- |more-prompt|
+    NonText        { fg=palette.subtle_white,      bg=palette.black }, -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line). See also |hl-EndOfBuffer|.
+    Normal         { fg=palette.subtle_white,      bg=palette.black }, -- Normal text
     NormalFloat    { NonText }, -- Normal text in floating windows.
-    -- FloatBorder    { }, -- Border of floating windows.
-    -- FloatTitle     { }, -- Title of floating windows.
+    FloatBorder    { VertSplit }, -- Border of floating windows.
+    FloatTitle     { Normal, gui = 'bold' }, -- Title of floating windows.
     NormalNC       { Normal }, -- normal text in non-current windows
-    Pmenu          { bg=overbg }, -- Popup menu: Normal item.
-    PmenuSel       { bg=mid }, -- Popup menu: Selected item.
-    -- PmenuKind      { }, -- Popup menu: Normal item "kind"
-    -- PmenuKindSel   { }, -- Popup menu: Selected item "kind"
-    -- PmenuExtra     { }, -- Popup menu: Normal item "extra text"
-    -- PmenuExtraSel  { }, -- Popup menu: Selected item "extra text"
-    PmenuSbar      { Pmenu }, -- Popup menu: Scrollbar.
-    PmenuThumb     { PmenuSel }, -- Popup menu: Thumb of the scrollbar.
-    Question       { fg=green }, -- |hit-enter| prompt and yes/no questions
-    QuickFixLine   { fg=pop }, -- Current |quickfix| item in the quickfix window. Combined with |hl-CursorLine| when the cursor is there.
+    Pmenu          { Normal, bg=palette.subtle_black }, -- Popup menu: Normal item.
+    PmenuSel       { fg=palette.white_subtle, bg=palette.gray, gui = 'bold' }, -- Popup menu: Selected item.
+    PmenuKind      { Pmenu }, -- Popup menu: Normal item "kind"
+    PmenuKindSel   { PmenuSel }, -- Popup menu: Selected item "kind"
+    PmenuExtra     { Pmenu }, -- Popup menu: Normal item "extra text"
+    PmenuExtraSel  { PmenuSel }, -- Popup menu: Selected item "extra text"
+    PmenuSbar      { bg=palette.subtle_white, fg=palette.black }, -- Popup menu: Scrollbar.
+    PmenuThumb     { PmenuSbar }, -- Popup menu: Thumb of the scrollbar.
+    Question       { fg=palette.green }, -- |hit-enter| prompt and yes/no questions
+    QuickFixLine   { fg=palette.white }, -- Current |quickfix| item in the quickfix window. Combined with |hl-CursorLine| when the cursor is there.
     Search         { CurSearch }, -- Last search pattern highlighting (see 'hlsearch'). Also used for similar items that need to stand out.
-    SpecialKey     { fg=mid }, -- Unprintable characters: text displayed differently from what it really is. But not 'listchars' whitespace. |hl-Whitespace|
-    SpellBad       { fg=red,     gui="underline" }, -- Word that is not recognized by the spellchecker. |spell| Combined with the highlighting used otherwise.
-    SpellCap       { fg=magenta, gui="underline" }, -- Word that should start with a capital. |spell| Combined with the highlighting used otherwise.
-    SpellLocal     { fg=orange,  gui="underline" }, -- Word that is recognized by the spellchecker as one that is used in another region. |spell| Combined with the highlighting used otherwise.
-    SpellRare      { fg=yellow,  gui="underline" }, -- Word that is recognized by the spellchecker as one that is hardly ever used. |spell| Combined with the highlighting used otherwise.
-    StatusLine     { bg=subtle }, -- Status line of current window
-    StatusLineNC   { fg=faded,   bg=overbg }, -- Status lines of not-current windows. Note: If this is equal to "StatusLine" Vim will use "^^^" in the status line of the current window.
-    TabLine        { bg=mid }, -- Tab pages line, not active tab page label
-    TabLineFill    { bg=overbg }, -- Tab pages line, where there are no labels
-    TabLineSel     { bg=faded }, -- Tab pages line, active tab page label
-    Title          { fg=blue }, -- Titles for output from ":set all", ":autocmd" etc.
-    Visual         { bg=mid }, -- Visual mode selection
-    VisualNOS      { bg=subtle }, -- Visual mode selection when vim is "Not Owning the Selection".
-    WarningMsg     { fg=red }, -- Warning messages
-    Whitespace     { fg=mid }, -- "nbsp", "space", "tab" and "trail" in 'listchars'
+    -- SpecialKey     { }, -- Unprintable characters: text displayed differently from what it really is. But not 'listchars' whitespace. |hl-Whitespace|
+    SpellBad       { gui="undercurl" }, -- Word that is not recognized by the spellchecker. |spell| Combined with the highlighting used otherwise.
+    SpellCap       { fg=palette.magenta, gui="underline" }, -- Word that should start with a capital. |spell| Combined with the highlighting used otherwise.
+    SpellLocal     { fg=palette.orange,  gui="underline" }, -- Word that is recognized by the spellchecker as one that is used in another region. |spell| Combined with the highlighting used otherwise.
+    SpellRare      { fg=palette.yellow,  gui="underline" }, -- Word that is recognized by the spellchecker as one that is hardly ever used. |spell| Combined with the highlighting used otherwise.
+    StatusLine     { bg=palette.subtle_black }, -- Status line of current window
+    StatusLineNC   { StatusLine }, -- Status lines of not-current windows. Note: If this is equal to "StatusLine" Vim will use "^^^" in the status line of the current window.
+    TabLine        { StatusLine }, -- Tab pages line, not active tab page label
+    TabLineFill    { StatusLine }, -- Tab pages line, where there are no labels
+    TabLineSel     { PmenuSel }, -- Tab pages line, active tab page label
+    Title          { fg=palette.blue }, -- Titles for output from ":set all", ":autocmd" etc.
+    Visual         { fg=palette.white, bg=palette.blue }, -- Visual mode selection
+    VisualNOS      { Visual }, -- Visual mode selection when vim is "Not Owning the Selection".
+    WarningMsg     { fg=palette.red }, -- Warning messages
+    -- Whitespace     { }, -- "nbsp", "space", "tab" and "trail" in 'listchars'
     Winseparator   { VertSplit }, -- Separator between window splits. Inherts from |hl-VertSplit| by default, which it will replace eventually.
     WildMenu       { Pmenu }, -- Current match in 'wildmenu' completion
     -- WinBar         { }, -- Window bar of current window
@@ -115,25 +95,25 @@ local theme = lush(function(injected_functions)
     --
     -- Uncomment and edit if you want more specific syntax highlighting.
     --
-    Comment        { fg=comment,  gui="italic" }, -- Any comment
+    Comment        { fg=palette.lightgray,  gui="italic" }, -- Any comment
 
-    Constant       { fg=orange }, -- (*) Any constant
-    String         { fg=green }, --   A string constant: "this is a string"
+    Constant       { fg=palette.orange }, -- (*) Any constant
+    String         { fg=palette.green }, --   A string constant: "this is a string"
     Character      { Constant }, --   A character constant: 'c', '\n'
-    Number         { fg=blue }, --   A number constant: 234, 0xff
+    Number         { fg=palette.blue }, --   A number constant: 234, 0xff
     Boolean        { Constant }, --   A boolean constant: TRUE, false
     Float          { Number }, --   A floating point constant: 2.3e10
 
-    Identifier     { fg=fg }, -- (*) Any variable name
-    Function       { fg=yellow }, --   Function name (also: methods for classes)
+    Identifier     { fg=palette.yellow }, -- (*) Any variable name
+    Function       { fg=palette.yellow }, --   Function name (also: methods for classes)
 
     Statement      { Constant }, -- (*) Any statement
     Conditional    { Constant }, --   if, then, else, endif, switch, etc.
     Repeat         { Constant }, --   for, do, while, etc.
     Label          { Constant }, --   case, default, etc.
-    Operator       { fg=fg }, --   "sizeof", "+", "*", etc.
+    Operator       { fg=palette.subtle_white }, --   "sizeof", "+", "*", etc.
     Keyword        { Constant }, --   any other keyword
-    Exception      { fg=red }, --   try, catch, throw
+    Exception      { fg=palette.red }, --   try, catch, throw
 
     PreProc        { Constant }, -- (*) Generic Preprocessor
     Include        { Constant }, --   Preprocessor #include
@@ -141,21 +121,21 @@ local theme = lush(function(injected_functions)
     Macro          { Constant }, --   Same as Define
     PreCondit      { Constant }, --   Preprocessor #if, #else, #endif, etc.
 
-    Type           { fg=fg }, -- (*) int, long, char, etc.
-    StorageClass   { fg=magenta }, --   static, register, volatile, etc.
+    Type           { fg=palette.orange }, -- (*) int, long, char, etc.
+    StorageClass   { fg=palette.magenta }, --   static, register, volatile, etc.
     Structure      { StorageClass }, --   struct, union, enum, etc.
     Typedef        { Type }, --   A typedef
 
     Special        { Normal }, -- (*) Any special symbol
-    SpecialChar    { Normal }, --   Special character in a constant
-    Tag            { fg=yellow }, --   You can use CTRL-] on this
+    SpecialChar    { fg=palette.orange }, --   Special character in a constant
+    Tag            { fg=palette.yellow }, --   You can use CTRL-] on this
     Delimiter      { Constant }, --   Character that needs attention
     SpecialComment { Constant }, --   Special things inside a comment (e.g. '\n')
     Debug          { Constant }, --   Debugging statements
 
     Underlined     { gui = "underline" }, -- Text that stands out, HTML links
-    Ignore         { fg=faded }, -- Left blank, hidden |hl-Ignore| (NOTE: May be invisible here in template)
-    Error          { fg=red }, -- Any erroneous construct
+    Ignore         { fg=palette.gray }, -- Left blank, hidden |hl-Ignore| (NOTE: May be invisible here in template)
+    Error          { fg=palette.red }, -- Any erroneous construct
     Todo           { gui = "bold" }, -- Anything that needs extra attention; mostly the keywords TODO FIXME and XXX
 
     -- These groups are for the native LSP client and diagnostic system. Some
@@ -164,7 +144,7 @@ local theme = lush(function(injected_functions)
     --
     -- See :h lsp-highlight, some groups may not be listed, submit a PR fix to lush-template!
     --
-    LspReferenceText            { bg=mid } , -- Used for highlighting "text" references
+    LspReferenceText            { bg=palette.subtle_black } , -- Used for highlighting "text" references
     LspReferenceRead            { LspReferenceText } , -- Used for highlighting "read" references
     LspReferenceWrite           { LspReferenceText } , -- Used for highlighting "write" references
     -- LspCodeLens                 { } , -- Used to color the virtual text of the codelens. See |nvim_buf_set_extmark()|.
@@ -255,5 +235,3 @@ local theme = lush(function(injected_functions)
     -- sym"@tag"               { }, -- Tag
 }
 end)
-
-return theme
