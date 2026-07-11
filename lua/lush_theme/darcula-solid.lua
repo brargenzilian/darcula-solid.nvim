@@ -70,9 +70,9 @@ local theme = lush(function(injected_functions)
     MsgArea        { fg=fg,      bg=bg }, -- Area for messages and cmdline
     MsgSeparator   { fg=orange }, -- Separator for scrolled messages, `msgsep` flag of 'display'
     MoreMsg        { fg=green }, -- |more-prompt|
-    NonText        { fg=hsl('#2f3032') }, -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line). See also |hl-EndOfBuffer|.
+    NonText        { fg=fg,      bg=bg }, -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line). See also |hl-EndOfBuffer|.
     Normal         { fg=fg,      bg=bg }, -- Normal text
-    NormalFloat    { fg=fg,      bg=overbg }, -- Normal text in floating windows.
+    NormalFloat    { NonText }, -- Normal text in floating windows.
     -- FloatBorder    { }, -- Border of floating windows.
     -- FloatTitle     { }, -- Title of floating windows.
     NormalNC       { fg=fg,      bg=bg.da(10) }, -- normal text in non-current windows
